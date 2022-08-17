@@ -10,32 +10,43 @@ import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlienHorde
-{
+public class AlienHorde {
 	private List<Alien> aliens;
 
-	public AlienHorde(int size)
-	{
+	public AlienHorde() {
+		aliens = new ArrayList<Alien>();
 	}
 
-	public void add(Alien al)
-	{
+	public void add(Alien al) {
+		aliens.add(al);
 	}
 
-	public void drawEmAll( Graphics window )
-	{
+	public void drawEmAll(Graphics window) {
+		for (int i = 0; i < aliens.size(); i++) {
+			aliens.get(i).draw(window);
+		}
 	}
 
-	public void moveEmAll()
-	{
+	public void moveEmAll() {
+		for (int i = 0; i < aliens.size(); i++) {
+			if (aliens.get(i).getX() > 740) {
+				aliens.get(i).setAlienBool(true);
+			}
+			if (aliens.get(i).getX() < 0) {
+				aliens.get(i).setAlienBool(false);
+			}
+			if (aliens.get(i).getAlienBool()) {
+				aliens.get(i).move("LEFT");
+			} else {
+				aliens.get(i).move("RIGHT");
+			}
+		}
 	}
 
-	public void removeDeadOnes(List<Ammo> shots)
-	{
+	public void removeDeadOnes(List<Ammo> shots) {
 	}
 
-	public String toString()
-	{
+	public String toString() {
 		return "";
 	}
 }
