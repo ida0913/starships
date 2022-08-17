@@ -12,32 +12,44 @@ import javax.imageio.ImageIO;
 public class Alien extends MovingThing {
 	private int speed;
 	private Image image;
+	private boolean a;
 
 	public Alien() {
 		this(0, 0, 30, 30, 0);
+		a = false;
 	}
 
 	public Alien(int x, int y) {
 		// add code here
 		this(x, y, 30, 30, 0);
+		a = false;
 	}
 
-	public Alien(int x, int y, int s)
-	{
-		//add code here
-		this(x, y, 30, 30, s)
+	public Alien(int x, int y, int s) {
+		// add code here
+		this(x, y, 30, 30, s);
+		a = false;
 	}
 
 	public Alien(int x, int y, int w, int h, int s) {
 		super(x, y, w, h);
 		speed = s;
+		a = false;
 		try {
-			URL url = getClass().getResource("/imgs/alien.jpg");
+			URL url = getClass().getResource("/imgs/alien.JPG");
 			image = ImageIO.read(url);
 		} catch (Exception e) {
 			// feel free to do something here
 			throw new Error("Can't find image");
 		}
+	}
+
+	public boolean getAlienBool() {
+		return a;
+	}
+
+	public void setAlienBool(boolean bool) {
+		a = bool;
 	}
 
 	public void setSpeed(int s) {
