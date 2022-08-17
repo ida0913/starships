@@ -13,11 +13,11 @@ import static java.lang.Character.*;
 import java.awt.image.BufferedImage;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class OuterSpace extends Canvas implements KeyListener, Runnable {
 	private Ship ship;
-	private Alien alienOne;
-	private Alien alienTwo;
+	private AlienHorde horde;
 
 	/*
 	 * uncomment once you are ready for this part
@@ -29,15 +29,22 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable {
 	private boolean[] keys;
 	private BufferedImage back;
 
-	public OuterSpace() {
+	public OuterSpace(int height, int width) {
 		setBackground(Color.black);
 
 		keys = new boolean[5];
-
+		horde = new AlienHorde();
 		// instantiate other instance variables
 		// Ship, Alien
 
 		ship = new Ship(400, 400, 75, 50, 10);
+
+		Alien[] aliens = new Alien[10];
+
+		for (int i = 0; i < aliens.length; i++) {
+			aliens[i] = new Alien(randomizeAlien(0, width), randomizeAlien(0, height - 300), randomizeAlien(2, 4));
+			horde.add(aliens[i]);
+		}
 
 		this.addKeyListener(this);
 		new Thread(this).start();
@@ -47,6 +54,11 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable {
 
 	public void update(Graphics window) {
 		paint(window);
+	}
+
+	public int randomizeAlien(int min, int max) {
+
+		return new Random().nextInt(max - min) + min;
 	}
 
 	public void paint(Graphics window) {
@@ -94,6 +106,11 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable {
 			ship.setY(600 - ship.getHeight());
 		}
 		ship.draw(graphToBack);
+		horde.drawEmAll(graphToBack);
+		horde.moveEmAll();	
+		
+
+		
 		// add in collision detection to see if Bullets hit the Aliens and if Bullets
 		// hit the Ship
 
