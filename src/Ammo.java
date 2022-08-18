@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.io.File;
 import java.net.URL;
 import javax.imageio.ImageIO;
+import java.awt.*;
 
 public class Ammo extends MovingThing {
 	private int speed;
@@ -19,7 +20,7 @@ public class Ammo extends MovingThing {
 
 	public Ammo(int x, int y) {
 		// add code
-		this(x, y, 1);
+		this(x, y, 4);
 	}
 
 	public Ammo(int x, int y, int s) {
@@ -28,8 +29,9 @@ public class Ammo extends MovingThing {
 		this.speed = s;
 
 		try {
-			URL url = getClass().getResource("/img/bullet-1.png");
+			URL url = getClass().getResource("/imgs/bullet-1.png");
 			image = ImageIO.read(url);
+			
 		} catch (Exception e) {
 			throw new Error("Can't find image");
 		}
@@ -46,7 +48,7 @@ public class Ammo extends MovingThing {
 
 	public void draw(Graphics window) {
 		// add code to draw the ammo
-		window.drawImage(image, getX(), getY(), 25, 25, null);
+		window.drawImage(image, getX(), getY(), 4, 10, null);
 	}
 
 	public void move(String direction) {

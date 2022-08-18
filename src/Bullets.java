@@ -31,7 +31,7 @@ public class Bullets {
 	public void moveEmAll() {
 		if (ammo.size() > 0) {
 			for (int i = 0; i < ammo.size(); i++) {
-				ammo.get(i).move("UP");
+				ammo.get(i).move("DOWN");
 			}
 		}
 	}

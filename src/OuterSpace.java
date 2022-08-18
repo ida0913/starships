@@ -18,7 +18,7 @@ import java.util.Random;
 public class OuterSpace extends Canvas implements KeyListener, Runnable {
 	private Ship ship;
 	private AlienHorde horde;
-
+	private Bullets shots;
 	/*
 	 * uncomment once you are ready for this part
 	 *
@@ -34,6 +34,7 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable {
 
 		keys = new boolean[5];
 		horde = new AlienHorde();
+		shots = new Bullets();
 		// instantiate other instance variables
 		// Ship, Alien
 
@@ -91,11 +92,15 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable {
 		if (keys[3] == true) {
 			ship.move("UP");
 		}
-		// add code to move Ship, Alien, etc.
-		// collision shit
-		if (ship.getX() < 0) {
-			ship.setX(0);
+		if (keys[4] == true) {
+			shots.add(new Ammo(ship.getX(), ship.getY()));
+			keys[4] = false;
 		}
+			// add code to move Ship, Alien, etc.
+			// collision shit
+			if (ship.getX() < 0) {
+				ship.setX(0);
+			}
 		if (ship.getX() > 800 - ship.getWidth()) {
 			ship.setX(800 - ship.getWidth());
 		}
@@ -107,14 +112,20 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable {
 		}
 		ship.draw(graphToBack);
 		horde.drawEmAll(graphToBack);
-		horde.moveEmAll();	
-		
+		horde.moveEmAll();
+		shots.drawEmAll(graphToBack);
+		shots.moveEmAll();
+		shots.cleanEmUp();
 
-		
 		// add in collision detection to see if Bullets hit the Aliens and if Bullets
 		// hit the Ship
 
 		twoDGraph.drawImage(back, null, 0, 0);
+
+		for(Alien a : horde.getAliens()){
+			horde.removeDeadOnes(shots.collision(a), a);
+		}
+
 	}
 
 	public void keyPressed(KeyEvent e) {

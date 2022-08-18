@@ -27,6 +27,10 @@ public class AlienHorde {
 		}
 	}
 
+	public List<Alien> getAliens(){
+		return aliens;
+	}
+
 	public void moveEmAll() {
 		for (int i = 0; i < aliens.size(); i++) {
 			if (aliens.get(i).getX() > 740) {
@@ -43,7 +47,10 @@ public class AlienHorde {
 		}
 	}
 
-	public void removeDeadOnes(List<Ammo> shots) {
+	public void removeDeadOnes(boolean coll, Alien al) {
+		if(coll){
+			al.setPos(-100, -100);
+		}
 	}
 
 	public String toString() {
